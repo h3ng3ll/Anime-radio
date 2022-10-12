@@ -16,6 +16,15 @@ Used sources
 
 App view (dark theme) 
 
+<img alt="home" src="https://i.ibb.co/MZ25rX7/Screenshot-20221012-084541-Anime-Radio.png" width="480"/>
+
+<img alt="settings" src="https://i.ibb.co/44Pp3cs/Screenshot-20221012-083139-Anime-Radio.png" width="480"/>
+
+<img alt="menu" src="https://i.ibb.co/F4pXJcr/Screenshot-20221012-084550-Anime-Radio.png" width="480"/>
+
+<img alt="library songs" src="https://i.ibb.co/C2LfmrJ/Screenshot-20221012-084600-Anime-Radio.png" width="480"/>
+
+
 ![home](https://i.ibb.co/MZ25rX7/Screenshot-20221012-084541-Anime-Radio.png)
 
 ![settings](https://i.ibb.co/44Pp3cs/Screenshot-20221012-083139-Anime-Radio.png)
