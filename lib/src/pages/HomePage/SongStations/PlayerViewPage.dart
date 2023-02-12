@@ -1,5 +1,6 @@
 
 
+import 'package:anime_radio/src/dialogs/BuildSearchSongDialog.dart';
 import 'package:anime_radio/src/models/MusicStation.dart';
 import 'package:anime_radio/src/models/Settings.dart';
 
@@ -9,7 +10,6 @@ import 'package:anime_radio/src/providers/SongsProvider.dart';
 
 import 'package:anime_radio/src/services/LocalStorageService.dart';
 import 'package:anime_radio/src/widgets/playerViewPage/BuildImage/BuildImagesDuringPlay.dart';
-import 'package:anime_radio/src/dialogs/BuildSearchSongDialog.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
