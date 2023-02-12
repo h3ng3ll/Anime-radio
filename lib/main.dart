@@ -1,10 +1,12 @@
 
+import 'dart:io';
+
+import 'package:admob_flutter/admob_flutter.dart';
 import 'package:anime_radio/l10n/l10n.dart';
 import 'package:anime_radio/src/models/AutoSettings.dart';
-import 'package:anime_radio/src/pages/HomePage.dart';
+import 'package:anime_radio/src/pages/HomePage/HomePage.dart';
 import 'package:anime_radio/src/providers/LocaleProvider.dart';
 import 'package:anime_radio/src/providers/ThemeProvider.dart';
-import 'package:anime_radio/src/services/ColorService.dart';
 
 import 'package:anime_radio/src/services/LocalStorageService.dart';
 
@@ -22,6 +24,15 @@ import 'package:provider/provider.dart';
 void main() async {
 
     WidgetsFlutterBinding.ensureInitialized();
+
+    /// initialize google ads
+
+    Admob.initialize();
+
+    /// add certificate in order to load images on old android devices .
+    ByteData data = await PlatformAssetBundle().load("assets/ca/imgCertificate.pem");
+    SecurityContext.defaultContext.setTrustedCertificatesBytes(data.buffer.asUint8List());
+
     /// run app only vertical
     await SystemChrome.setPreferredOrientations([
         DeviceOrientation.portraitUp ,
@@ -29,11 +40,21 @@ void main() async {
     ]);
 
 
-   return runApp( ChangeNotifierProvider(
-       create: (_) => ThemeProvider(),        /// theme
-       child: ChangeNotifierProvider(
-           create: (_) => LocaleProvider(),   /// locale
-           child: const MyApp()))
+   return runApp(
+       MultiProvider(
+         providers: [
+            ChangeNotifierProvider(
+              create: (_) => ThemeProvider(),        /// theme
+            ),
+            ChangeNotifierProvider(
+             create: (_) => LocaleProvider(),   /// locale
+            )
+         ],
+         child: const RootRestorationScope(
+             restorationId: "root",
+             child:  MyApp()
+         )
+       )
    );
 } 
 
@@ -45,6 +66,8 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 
   /// InheritedWidget style accessor to our State object.
+
+  // ignore: library_private_types_in_public_api
   static _MyAppState of(BuildContext context) =>
       context.findAncestorStateOfType<_MyAppState>()!;
 }
@@ -86,7 +109,7 @@ class _MyAppState extends State<MyApp> {
             ],
             locale: settings.locale,
             supportedLocales: L10n.all,
-            home: const HomePage() ,//HomePage(),
+             home: const HomePage() ,
           );
         }
         else {

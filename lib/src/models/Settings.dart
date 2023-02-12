@@ -1,27 +1,35 @@
 
 class Settings {
 
-   bool removeImage;
-   bool removeSoundSlider;
-   bool removeListLastSongs;
+   bool showImageDuringPlaying;
+   bool showSongsTable;
 
-  Settings(
-      this.removeImage,
-      this.removeSoundSlider,
-      this.removeListLastSongs
-  );
-
-
+   /// If station was loaded unsuccessfully then
+   /// this field will rule state of loading station.
+   bool showUnloadedStations;
+   
+  Settings({
+    this.showUnloadedStations = true,
+    this.showImageDuringPlaying = true,
+    this.showSongsTable = true,
+  });
+  
   static Settings fromJson (Map<String , dynamic> json ) => Settings(
-      json['removeImage'],
-      json['removeSoundSlider'],
-      json['removeListLastSongs']
+    showUnloadedStations: json['showUnloadedStations'],
+    showImageDuringPlaying:   json['showImageDuringPlaying'],
+    showSongsTable:   json['showSongsTable']
   );
 
   Map<String , dynamic> toJson () => {
-    'removeImage' : removeImage,
-    'removeSoundSlider' : removeSoundSlider,
-    'removeListLastSongs' : removeListLastSongs
+    'showUnloadedStations' : showUnloadedStations,
+    'showImageDuringPlaying' : showImageDuringPlaying,
+    'showSongsTable' : showSongsTable
   };
+
+   void resetSettings () {
+     showUnloadedStations = true;
+     showImageDuringPlaying = true;
+     showSongsTable = true;
+   }
 }
 

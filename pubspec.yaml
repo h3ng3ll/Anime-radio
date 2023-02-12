@@ -41,10 +41,19 @@ dependencies:
   cupertino_icons: ^1.0.2
   adaptive_theme: ^3.1.1       # theme changing
   flutter_radio_player: ^1.1.0 # translate radio
-  shared_preferences: ^2.0.15  # restore theme
-  url_launcher: ^6.1.6         # open url
+  shared_preferences: ^2.0.15  # restore different settings
+  url_launcher: ^6.1.6         # open some url
   grouped_list: ^5.1.2
   rename: ^2.0.1
+  cached_network_image: ^3.2.3
+  connectivity_plus: ^3.0.2
+  admob_flutter: ^3.0.0
+
+  dio: ^4.0.6
+  path_provider: ^2.0.12          # plugin for finding commonly used locations on the filesystem
+  image_gallery_saver: ^1.7.1     # save image to gallery
+  permission_handler: ^10.2.0     # get perm for example for storage
+  http:
 #  flutter_launcher_icons: ^0.10.0
 
 dev_dependencies:
@@ -58,7 +67,7 @@ dev_dependencies:
 #  icon_size: 256
 
   flutter_lints: ^2.0.0
-
+#  lints: ^2.0.1
 flutter:
 
   # The following line ensures that the Material Icons font is
@@ -73,6 +82,10 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - assets/
+    - assets/icons/
+    - assets/images/
+    # certificates
+    - assets/ca/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

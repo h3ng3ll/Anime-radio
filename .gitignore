@@ -47,3 +47,5 @@ app.*.map.json
 /ios
 # web app is not used
 /web
+
+lib/ToFixBugsList.txt

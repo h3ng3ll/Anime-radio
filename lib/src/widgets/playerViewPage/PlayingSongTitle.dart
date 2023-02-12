@@ -6,12 +6,10 @@ class BuildPlayingTitle extends StatelessWidget {
   const BuildPlayingTitle({Key? key}) : super(key: key);
 
   Widget myText (String text ) => Expanded(
-      child: Align(
-        alignment: Alignment.center,
-        child: Text(
-          text ,
-          style: const TextStyle(fontSize: 18)
-        )
+      child: Text(
+        text ,
+        textAlign: TextAlign.center,
+        style: const TextStyle(fontSize: 18)
       )
   );
 
@@ -24,6 +22,7 @@ class BuildPlayingTitle extends StatelessWidget {
         myText(l.song),
         myText(l.compositor),
         myText(l.when_played),
+        myText(l.station),
       ],
     );
   }
