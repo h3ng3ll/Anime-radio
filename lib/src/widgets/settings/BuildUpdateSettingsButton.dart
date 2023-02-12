@@ -21,7 +21,6 @@ class BuildUpdateSettingsButton extends StatefulWidget {
 class _BuildUpdateSettingsButtonState extends State<BuildUpdateSettingsButton> {
 
 
-
   bool canUpdate = true;
 
   Future<void> timerCycle () async {
@@ -46,9 +45,11 @@ class _BuildUpdateSettingsButtonState extends State<BuildUpdateSettingsButton> {
   }
   @override
   Widget build(BuildContext context) {
-    return  ElevatedButton(
+    return IconButton(
         onPressed: canUpdate ? updateSettings : null,
-        child:  Icon(Icons.save , color: canUpdate ?  null : ColorService.grey ,)
+        icon: Icon(
+          Icons.save , color: canUpdate ?  null : ColorService.grey
+        ),
     );
   }
 }

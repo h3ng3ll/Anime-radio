@@ -1,91 +1,66 @@
 
-import 'package:anime_radio/src/pages/ListPlayedSongs.dart';
+import 'package:admob_flutter/admob_flutter.dart';
+import 'package:anime_radio/src/pages/AppInfoPage.dart';
+import 'package:anime_radio/src/pages/ListPlayedSongsPage.dart';
 import 'package:anime_radio/src/pages/SettingsPage.dart';
-import 'package:anime_radio/src/providers/LocaleProvider.dart';
-
-
+import 'package:anime_radio/src/providers/PlayedSongsProvider.dart';
+import 'package:anime_radio/src/providers/ThemeProvider.dart';
+import 'package:anime_radio/src/services/AdMobService.dart';
 import 'package:anime_radio/src/services/ColorService.dart';
+
+
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
+
 class MyDrawer extends StatefulWidget {
+
   final void Function () update;
+
   const MyDrawer({Key? key, required this.update}) : super(key: key);
 
   @override
   State<MyDrawer> createState() => _MyDrawerState();
 }
 
-class _MyDrawerState extends State<MyDrawer>{
+class _MyDrawerState extends State<MyDrawer> {
+
+  AdmobBannerSize? bannerSize ;
+  late AdmobInterstitial interstitialAd ;
+
+  @override
+  void initState() {
+
+    initializeAds();
+    super.initState();
+  }
+
+  void initializeAds () {
+    bannerSize = AdmobBannerSize.BANNER;
+
+    interstitialAd = AdmobInterstitial(
+        adUnitId: AdMobService().getBannerAdUnitId()!,
+        listener: (AdmobAdEvent event , Map<String , dynamic>? args){
+          if (event == AdmobAdEvent.closed) interstitialAd.load();
+        }
+    )..load();
+  }
+
 
   @override
   Widget build(BuildContext context) {
 
-    Widget title (String text)=> Center(
-      child: Text(text , style:   const TextStyle(
-          fontSize: 24 ,
-          fontWeight: FontWeight.bold
-      )),
-    );
+
+    final theme = Provider.of<ThemeProvider>(context , listen:  false).currentTheme;
 
     final size = MediaQuery.of(context).size;
     return SafeArea(
-      child: ListView(
+      child: Column(
         children: [
-          /// title
-           SizedBox(height: size.height*0.02,),
-          title("Animeradio.su"),
-          SizedBox(height: size.height*0.05,),
 
-          title(AppLocalizations.of(context)!.app_sources),
-          Center(child: Text(AppLocalizations.of(context)!.unofficial_app.toUpperCase())),
-          SizedBox(height: size.height*0.02,),
-          /// created by
-          ListTile(
-            title: Column(
-              children: [
-                Text(AppLocalizations.of(context)!.created_by , style:  const TextStyle(fontSize: 18 , fontWeight: FontWeight.bold) , textAlign: TextAlign.center),
-                const Text(
-                    "Hengell" ,
-                    style:   TextStyle(
-                        fontSize: 18 ,
-                        fontWeight: FontWeight.bold ,
-                        color: ColorService.red
-                    )
-                ),
-              ],
-            ),
-            leading: const Icon(Icons.person),
-          ),
-          /// images taken from
-          ListTile(
-            title: Column(
-              children: [
-                Text(AppLocalizations.of(context)!.img_taken_from , style:  const TextStyle(fontSize: 18 , fontWeight: FontWeight.bold) , textAlign: TextAlign.center,),
-                const Text("pinterest.com" , style:TextStyle(fontSize: 18 , fontWeight: FontWeight.bold , color: ColorService.grey)),
-              ],
-            ),
-            leading: const Icon(Icons.image),
-          ),
-          /// where broadcast
-          ListTile(
-            title: Column(
-              children: [
-                Text(
-                    AppLocalizations.of(context)!.radio_broadcasting ,
-                    style:  const TextStyle(
-                        fontSize: 18 ,
-                        fontWeight: FontWeight.bold
-                    ),
-                    textAlign: TextAlign.center
-                ),
-                const Text("http://animeradio.su:8000" , style:TextStyle(fontSize: 18 , fontWeight: FontWeight.bold , color: ColorService.grey)  , textAlign: TextAlign.center),
-              ],
-            ),
-            leading: const Icon(Icons.audiotrack),
-          ),
-          SizedBox(height: size.height*0.03,),
+          SizedBox(height: size.height*0.05),
+
           /// navigation
           title(AppLocalizations.of(context)!.navigation),
           SizedBox(height: size.height*0.03),
@@ -93,31 +68,62 @@ class _MyDrawerState extends State<MyDrawer>{
           /// savedSongs
            ListTile(
             title:  ElevatedButton(
-                onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => ListPlayedSongs())),
+                onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) =>  //const ListPlayedSongs()
+                        Provider<PlayedSongsProvider>(
+                        create: (BuildContext context) => PlayedSongsProvider(),
+                        child: const ListPlayedSongs())
+                    )
+                ),
                 child: Text(
                     AppLocalizations.of(context)!.show_all_played_songs  ,
-                    textAlign: TextAlign.center)
+                    style:  TextStyle(color: theme == ThemeMode.dark ? null : ColorService.white),
+                    textAlign: TextAlign.center
+                )
             ), leading: const  Icon(Icons.queue_music),
           ),
 
           /// settings
           ListTile(
             title: ElevatedButton(
-              child: Text(AppLocalizations.of(context)!.go_to_settings),
+              child: Text(
+                  AppLocalizations.of(context)!.go_to_settings,
+                  // style:  TextStyle(color: theme == ThemeMode.dark ? null : ColorService.white),
+              ),
               onPressed: () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) {
-                  return SettingsPage(update: widget.update,);
-                }))
+                    context,
+                    MaterialPageRoute(builder: (context) => 
+                      SettingsPage(update: widget.update,)
+                    )
+              )
             ),
             leading: const  Icon(Icons.settings),
           ),
+
+          /// Metadata page
+          ListTile(
+            title: ElevatedButton(
+                child: Text(
+                    AppLocalizations.of(context)!.more_app_info,
+                    // style:  TextStyle(color: theme == ThemeMode.dark ? null : ColorService.white),
+                ),
+                onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) {
+                      return const AppInfoPage();
+                    }))
+            ),
+            leading: const  Icon(Icons.person),
+          ),
+
           SizedBox(height: size.height*0.03),
           /// feedback
           title(AppLocalizations.of(context)!.feedBack),
           Center(child: Text(AppLocalizations.of(context)!.send_bugs_and_errors)),
           SizedBox(height: size.height*0.02,),
           const ListTile(
+            //ignore_for_file:@hengell
             title: Text("@hengell" , style:   TextStyle(fontSize: 18 , fontWeight: FontWeight.bold) ),
             leading:  Icon(Icons.telegram),
           ),
@@ -125,9 +131,36 @@ class _MyDrawerState extends State<MyDrawer>{
             title: Text("h3ng3ll@gmail.com" , style:   TextStyle(fontSize: 18 , fontWeight: FontWeight.bold) ),
             leading:  Icon(Icons.mail),
           ),
+           ListTile(
+            title: const Text("hengell" , style:   TextStyle(fontSize: 18 , fontWeight: FontWeight.bold) ),
+            leading:  Image.asset(
+              "assets/icons/vk.png"  ,
+              width: 30,
+              color:  theme == ThemeMode.dark ?  ColorService.white :   ColorService.grey8,
+            ),
+          ),
+
+          if(bannerSize != null) ...adBanner()
         ],
 
       ),
     );
   }
+
+  Widget title (String text)=> Center(
+    child: Text(text , style:   const TextStyle(
+        fontSize: 24 ,
+        fontWeight: FontWeight.bold
+    )),
+  );
+
+  List<Widget> adBanner () =>[
+    const Spacer(),
+    Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      height: 52,
+      child: AdmobBanner(adUnitId: AdMobService().getBannerAdUnitId()!, adSize: bannerSize!,),
+    )
+  ];
+
 }
