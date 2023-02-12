@@ -3,10 +3,8 @@ import 'package:anime_radio/l10n/l10n.dart';
 import 'package:anime_radio/src/providers/LocaleProvider.dart';
 import 'package:anime_radio/src/providers/ThemeProvider.dart';
 import 'package:anime_radio/src/services/LocalStorageService.dart';
-import 'package:anime_radio/src/widgets/settings/BuildListSettingItem.dart';
 import 'package:anime_radio/src/widgets/settings/BuildUpdateSettingsButton.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'package:anime_radio/src/models/Settings.dart';
@@ -21,19 +19,26 @@ class SettingsPage extends StatefulWidget {
   State<SettingsPage> createState() => _SettingsPageState();
 }
 
-
-
 class _SettingsPageState extends State<SettingsPage> {
 
+  Settings settings = Settings(false, false, false);
 
   @override
   void initState() {
+    // TODO: implement initState
     super.initState();
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersive);
+    LocalStorageService.getSettings().then(
+            (value) => setState(() =>  settings = value)
+    );
   }
 
-
-  Settings settings = Settings();
+ 
+      
+  
+  Widget _buildItem ({required Widget title, required  IconData icon}) => ListTile(
+    leading: Icon(icon),
+    title: title,
+  );
 
 
 
@@ -51,60 +56,72 @@ class _SettingsPageState extends State<SettingsPage> {
 
     bool lightTheme = themeProvider.currentTheme == ThemeMode.light;
 
-    return BuildListSettingItem(
-        lightTheme ?
+    return _buildItem(
+      icon: Icons.remove_red_eye,
+      title: Row(
+        children: [
+          Text(
+              lightTheme ?
               AppLocalizations.of(context)!.light_theme :
-              AppLocalizations.of(context)!.dark_theme,
-        icon: Icons.remove_red_eye,
-        switchValue:  !lightTheme,
-        callBack: (lightTheme) async {
-          lightTheme ?  await themeProvider.setDarkMode(context) :
-                      await themeProvider.setLightMode(context) ;
-
-                      // setState(() {});
-                      widget.update();
-        }
+              AppLocalizations.of(context)!.dark_theme
+          ),
+          Switch(
+              value: !lightTheme,
+              onChanged: (lightTheme) async {
+                lightTheme ?  await themeProvider.setDarkMode(context) :
+                await themeProvider.setLightMode(context) ;
+                setState(() {});
+              }),
+        ],
+      ),
     );
   }
 
-
-  Widget showImageDuringPlaying() => BuildListSettingItem(
-      AppLocalizations.of(context)!.show_image_during_playing ,
-      icon: Icons.image, switchValue: settings.showImageDuringPlaying,
-      callBack: (bool switchStatus) => settings.showImageDuringPlaying = switchStatus
+  Widget showOrNotImage() => _buildItem(
+    title: Row(
+      children: [
+        Text(AppLocalizations.of(context)!.remove_image_while_playing , textAlign: TextAlign.center,),
+        Switch(
+            value: settings.removeImage,
+            onChanged: (value) => setState(() => settings.removeImage = value)
+        ),
+      ],
+    ),
+    icon: Icons.image,
   );
 
-  Widget showTableWithSongs () => BuildListSettingItem(
-      AppLocalizations.of(context)!.show_table_with_songs ,
-      icon: Icons.table_rows_rounded,
-      switchValue: settings.showSongsTable,
-      callBack: (bool switchStatus) => settings.showSongsTable = switchStatus
+  Widget showPlayedMusicOrNot () => _buildItem(
+    title: Row(
+      children: [
+        Text(AppLocalizations.of(context)!.do_not_show_last_song_table , textAlign: TextAlign.center,),
+        Switch(
+            value: settings.removeListLastSongs,
+            onChanged: (value) =>
+              setState(() {
+                settings.removeListLastSongs = value;
+              })
+        ),
+      ],
+    ),
+    icon: Icons.table_rows_rounded,
   );
 
-  Widget showUnloadedStations () => BuildListSettingItem(
-      AppLocalizations.of(context)!.show_unsuccessfully_loaded_stations,
-      icon: Icons.error,
-      switchValue: settings.showUnloadedStations,
-      callBack: (bool switchStatus) =>  settings.showUnloadedStations = switchStatus
+  Widget showSoundSliderOrNot () => _buildItem(
+    title: Row(
+      children: [
+        Text(AppLocalizations.of(context)!.remove_slider),
+        Switch(
+            value: settings.removeSoundSlider,
+            onChanged: (value) {
+              setState(() {
+                settings.removeSoundSlider = value;
+              });
+            }
+        ),
+      ],
+    ),
+    icon: Icons.music_off_rounded,
   );
-
-  /// Sound Slider was removed at this version
-  // Widget showSoundSliderOrNot () => _buildItem(
-  //   title: Row(
-  //     children: [
-  //       Text(AppLocalizations.of(context)!.remove_slider),
-  //       Switch(
-  //           value: settings.removeSoundSlider,
-  //           onChanged: (value) {
-  //             setState(() {
-  //               settings.removeSoundSlider = value;
-  //             });
-  //           }
-  //       ),
-  //     ],
-  //   ),
-  //   icon: Icons.music_off_rounded,
-  // );
 
   Widget changeLocale () => Row(
     children:[
@@ -132,88 +149,30 @@ class _SettingsPageState extends State<SettingsPage> {
    ]
   );
 
-
-  Widget resetSettingsButton () =>  ElevatedButton(
-      onPressed: () async {
-        settings.resetSettings();
-        await LocalStorageService.saveSettings(settings);
-        widget.update;
-        setState(() {   });
-
-      },
-      child: Text(AppLocalizations.of(context)!.reset_settings)
-  );
-
-
   @override
   Widget build(BuildContext ctx) {
+    return Scaffold(
+      appBar: AppBar(actions: [ BuildUpdateSettingsButton(
+          updateParent: widget.update,
+          updateSettings: () async => await LocalStorageService.saveSettings(settings),
+      )],),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        title(AppLocalizations.of(context)!.settings),
+          /// switch images
+        showOrNotImage(),
+          /// switch last music
+        showPlayedMusicOrNot(),
+          /// switch sound slider
+        showSoundSliderOrNot(),
+        title(AppLocalizations.of(context)!.auto_settings),
+          /// dark or light theme
+        changeTheme(),
 
-    final size = MediaQuery.of(context).size;
-
-    return WillPopScope(
-      child: Scaffold(
-        appBar: AppBar(
-          leading: BackButton(
-            onPressed: () {
-              SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-              Navigator.pop(context);
-            },
-          ),
-          actions: [
-            const Spacer(),
-            Center(child: title(AppLocalizations.of(context)!.settings)),
-            const Spacer(),
-            BuildUpdateSettingsButton(
-              updateParent: widget.update,
-              updateSettings: () async => await LocalStorageService.saveSettings(settings),
-            )
-          ],
-        ),
-        body: FutureBuilder<Settings>(
-          future:  LocalStorageService.getSettings(),
-          builder: (context, snapshot) {
-            if(ConnectionState.done == snapshot.connectionState) {
-              settings = snapshot.data!;
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Expanded(
-                      child: Column(
-                        children: [
-
-                          /// switch images
-                          showImageDuringPlaying(),
-                          /// switch last music
-                          showTableWithSongs(),
-                          //   /// switch sound slider
-                          // showSoundSliderOrNot(),
-                          showUnloadedStations(),
-
-                          title(AppLocalizations.of(context)!.auto_settings),
-                          /// dark or light theme
-                          changeTheme(),
-
-                          changeLocale(),
-
-                        ],
-                      )
-                  ),
-
-                  // Spacer(),
-                  resetSettingsButton(),
-                  SizedBox(height: size.height*0.015)
-                ],
-              );
-            }
-            /// nothing load because it's not  depend on Internet .
-            return Container();
-          }
-        ),
-      ),
-      onWillPop: () async {
-        SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-        return true;
-      },
+        changeLocale()
+      ],
+    ),
     );
   }
 }

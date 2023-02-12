@@ -90,11 +90,11 @@ class S {
     );
   }
 
-  /// `Now playing`
-  String get now_playing {
+  /// `Now play`
+  String get now_play {
     return Intl.message(
-      'Now playing',
-      name: 'now_playing',
+      'Now play',
+      name: 'now_play',
       desc: '',
       args: [],
     );
@@ -105,6 +105,16 @@ class S {
     return Intl.message(
       'Information about track is lost',
       name: 'info_lost',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unofficial anime radio`
+  String get unofficial_app {
+    return Intl.message(
+      'Unofficial anime radio',
+      name: 'unofficial_app',
       desc: '',
       args: [],
     );
@@ -270,21 +280,21 @@ class S {
     );
   }
 
-  /// `Show image during playing`
-  String get show_image_during_playing {
+  /// `Image during playing`
+  String get remove_image_while_playing {
     return Intl.message(
-      'Show image during playing',
-      name: 'show_image_during_playing',
+      'Image during playing',
+      name: 'remove_image_while_playing',
       desc: '',
       args: [],
     );
   }
 
   /// `Show table with songs`
-  String get show_table_with_songs {
+  String get do_not_show_last_song_table {
     return Intl.message(
       'Show table with songs',
-      name: 'show_table_with_songs',
+      name: 'do_not_show_last_song_table',
       desc: '',
       args: [],
     );
@@ -320,11 +330,11 @@ class S {
     );
   }
 
-  /// `About app`
-  String get about_app {
+  /// `App sources`
+  String get app_sources {
     return Intl.message(
-      'About app',
-      name: 'about_app',
+      'App sources',
+      name: 'app_sources',
       desc: '',
       args: [],
     );
@@ -345,166 +355,6 @@ class S {
     return Intl.message(
       'Go to settings',
       name: 'go_to_settings',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Station`
-  String get station {
-    return Intl.message(
-      'Station',
-      name: 'station',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `More about app`
-  String get more_app_info {
-    return Intl.message(
-      'More about app',
-      name: 'more_app_info',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Failed to load station`
-  String get failed_to_load_station {
-    return Intl.message(
-      'Failed to load station',
-      name: 'failed_to_load_station',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Reset settings`
-  String get reset_settings {
-    return Intl.message(
-      'Reset settings',
-      name: 'reset_settings',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Show unsuccessfully loaded stations`
-  String get show_unsuccessfully_loaded_stations {
-    return Intl.message(
-      'Show unsuccessfully loaded stations',
-      name: 'show_unsuccessfully_loaded_stations',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `No internet connection`
-  String get no_internet_connection {
-    return Intl.message(
-      'No internet connection',
-      name: 'no_internet_connection',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Image successfully has been saved to `
-  String get image_successfully_has_been_saved_to {
-    return Intl.message(
-      'Image successfully has been saved to ',
-      name: 'image_successfully_has_been_saved_to',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Okay`
-  String get okay {
-    return Intl.message(
-      'Okay',
-      name: 'okay',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Storage permission haven't been granted`
-  String get storage_permission_have_not_granted {
-    return Intl.message(
-      'Storage permission haven\'t been granted',
-      name: 'storage_permission_have_not_granted',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Exit`
-  String get exit {
-    return Intl.message(
-      'Exit',
-      name: 'exit',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `All songs`
-  String get all_songs {
-    return Intl.message(
-      'All songs',
-      name: 'all_songs',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Favorite songs`
-  String get favorite_songs {
-    return Intl.message(
-      'Favorite songs',
-      name: 'favorite_songs',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `All stations`
-  String get all_stations {
-    return Intl.message(
-      'All stations',
-      name: 'all_stations',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Favorite stations`
-  String get favorite_stations {
-    return Intl.message(
-      'Favorite stations',
-      name: 'favorite_stations',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Version `
-  String get version {
-    return Intl.message(
-      'Version ',
-      name: 'version',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Failed to save image to`
-  String get failed_to_save_image {
-    return Intl.message(
-      'Failed to save image to',
-      name: 'failed_to_save_image',
       desc: '',
       args: [],
     );

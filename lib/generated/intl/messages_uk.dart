@@ -22,75 +22,49 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
-        "about_app": MessageLookupByLibrary.simpleMessage("Про додаток"),
-        "all_songs": MessageLookupByLibrary.simpleMessage("Всі пісні"),
-        "all_stations": MessageLookupByLibrary.simpleMessage("Всі станції"),
+        "app_sources": MessageLookupByLibrary.simpleMessage("Ресурси"),
         "auto_settings":
             MessageLookupByLibrary.simpleMessage("Автоматичні налаштування"),
         "compositor": MessageLookupByLibrary.simpleMessage("Виконавець"),
         "created_by":
             MessageLookupByLibrary.simpleMessage("Створив цю програму"),
         "dark_theme": MessageLookupByLibrary.simpleMessage("Темна тема"),
-        "exit": MessageLookupByLibrary.simpleMessage("Вийти"),
-        "failed_to_load_station": MessageLookupByLibrary.simpleMessage(
-            "Не вдалося завантажити радіостанцію"),
-        "failed_to_save_image": MessageLookupByLibrary.simpleMessage(
-            "Не вдалося зберегти зображення в "),
-        "favorite_songs": MessageLookupByLibrary.simpleMessage("Любимі пісні"),
-        "favorite_stations":
-            MessageLookupByLibrary.simpleMessage("Улюблені станції"),
+        "do_not_show_last_song_table": MessageLookupByLibrary.simpleMessage(
+            "Показувати таблицю із піснями "),
         "feedBack": MessageLookupByLibrary.simpleMessage("Зворотній зв\'язок "),
         "find": MessageLookupByLibrary.simpleMessage("Знайти"),
         "find_song": MessageLookupByLibrary.simpleMessage("Шукати пісню"),
         "general_information":
             MessageLookupByLibrary.simpleMessage("Загальна інформація"),
         "go_to_settings": MessageLookupByLibrary.simpleMessage("Налаштування"),
-        "image_successfully_has_been_saved_to":
-            MessageLookupByLibrary.simpleMessage(
-                "Зображення успішно було збережено в "),
         "img_taken_from":
             MessageLookupByLibrary.simpleMessage("Зображення взяті із сайту"),
         "info_lost":
             MessageLookupByLibrary.simpleMessage("Інформація про пісню"),
         "language": MessageLookupByLibrary.simpleMessage("Українська"),
         "light_theme": MessageLookupByLibrary.simpleMessage("Світла тема"),
-        "more_app_info":
-            MessageLookupByLibrary.simpleMessage("Детальніше про додаток"),
         "navigation": MessageLookupByLibrary.simpleMessage("Навігація"),
         "no": MessageLookupByLibrary.simpleMessage("Ні"),
-        "no_internet_connection": MessageLookupByLibrary.simpleMessage(
-            "Немає підключення до Інтернету"),
-        "now_playing": MessageLookupByLibrary.simpleMessage("Зараз звучить"),
-        "okay": MessageLookupByLibrary.simpleMessage("Добре"),
+        "now_play": MessageLookupByLibrary.simpleMessage("Зараз звучить"),
         "play_recently":
             MessageLookupByLibrary.simpleMessage("Звучало недавно "),
         "radio_broadcasting":
             MessageLookupByLibrary.simpleMessage("Радіо транслюється на"),
+        "remove_image_while_playing": MessageLookupByLibrary.simpleMessage(
+            "Показувати картинку \n коли міняється пісня"),
         "remove_slider":
             MessageLookupByLibrary.simpleMessage("Видалити звуковий повзунок"),
         "remove_songs_alert": MessageLookupByLibrary.simpleMessage(
             "Вы впевнені , що ви хочете видалити всі пісні ?"),
-        "reset_settings":
-            MessageLookupByLibrary.simpleMessage("Скинути налаштування "),
         "saved_songs": MessageLookupByLibrary.simpleMessage("Збережені треки"),
         "send_bugs_and_errors":
             MessageLookupByLibrary.simpleMessage("Відправляйте баги і помилки"),
         "settings": MessageLookupByLibrary.simpleMessage("Налаштування"),
         "show_all_played_songs": MessageLookupByLibrary.simpleMessage(
             "Показати всі збережені пісні"),
-        "show_image_during_playing": MessageLookupByLibrary.simpleMessage(
-            "Показувати картинку \n коли міняється пісня"),
-        "show_table_with_songs": MessageLookupByLibrary.simpleMessage(
-            "Показувати таблицю із піснями "),
-        "show_unsuccessfully_loaded_stations":
-            MessageLookupByLibrary.simpleMessage(
-                "Показывувати станції які \n не вдалось загрузити"),
         "song": MessageLookupByLibrary.simpleMessage("Пісня"),
-        "station": MessageLookupByLibrary.simpleMessage("Станція"),
-        "storage_permission_have_not_granted":
-            MessageLookupByLibrary.simpleMessage(
-                "Доступ до сховища не був отриманий"),
-        "version": MessageLookupByLibrary.simpleMessage("Версія "),
+        "unofficial_app":
+            MessageLookupByLibrary.simpleMessage("Неофіційне аніме радіо"),
         "when_played": MessageLookupByLibrary.simpleMessage("Коли звучало"),
         "yes": MessageLookupByLibrary.simpleMessage("Так")
       };

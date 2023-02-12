@@ -18,23 +18,19 @@ class ThemeProvider extends ChangeNotifier {
       linearMinHeight: 20.0,
       color: ColorService.lilac
     ),
-    appBarTheme: const  AppBarTheme(
-      toolbarTextStyle: TextStyle(color: ColorService.white),
-      iconTheme: IconThemeData(
-        color: ColorService.white,
-      ),
+    appBarTheme: const AppBarTheme(
       systemOverlayStyle: SystemUiOverlayStyle(
         statusBarIconBrightness: Brightness.light,
         statusBarBrightness: Brightness.dark
       ),
-      color: ColorService.dGrey
+      color: ColorService.lilac
     ),
     switchTheme: SwitchThemeData(
       trackColor: MaterialStateProperty.all<Color>(ColorService.grey),
       thumbColor: MaterialStateProperty.all<Color>(ColorService.lilac),
     ),
-    /// not effect
     sliderTheme:  SliderThemeData(
+
       activeTrackColor: ColorService.white,
       inactiveTrackColor:  ColorService.grey,
       thumbColor:    ColorService.lilac,
@@ -43,16 +39,11 @@ class ThemeProvider extends ChangeNotifier {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
-            textStyle: const  MaterialStatePropertyAll<TextStyle>(
-              TextStyle(
-                color: ColorService.white
-              ),
-            ),
-            backgroundColor:  MaterialStateProperty.all<Color>( ColorService.dGrey)
+            backgroundColor:  MaterialStateProperty.all<Color>( ColorService.lilac)
         )
     ),
     brightness: Brightness.dark,
-    canvasColor: ColorService.ddGrey ,
+    canvasColor: ColorService.darkGrey ,
     textTheme: const TextTheme(
         bodyMedium: TextStyle(color: ColorService.white) /// text color
     ),
@@ -60,15 +51,6 @@ class ThemeProvider extends ChangeNotifier {
 
   );
   static final lightTheme = ThemeData(
-      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-        selectedLabelStyle: TextStyle(
-          color: ColorService.black
-        ),
-        selectedItemColor: ColorService.black, /// selected  font color
-        // selectedIconTheme: IconThemeData(
-        //   color: ColorService.red,
-        // )
-      ),
       progressIndicatorTheme: const  ProgressIndicatorThemeData(
         // circularTrackColor: ColorService.lilac,
         //   linearMinHeight: 20.0,
@@ -84,7 +66,7 @@ class ThemeProvider extends ChangeNotifier {
               statusBarIconBrightness: Brightness.light,
               statusBarBrightness: Brightness.light
           ),
-        color: ColorService.lilac
+        color: ColorService.violet
       ),
       sliderTheme:   SliderThemeData(
          activeTrackColor:  ColorService.violet,
@@ -120,10 +102,6 @@ class ThemeProvider extends ChangeNotifier {
                         break;
           case ThemeMode.dark:  _themeData = darkTheme;
                         break;
-        case ThemeMode.system:
-          /// by default using dark theme
-          _themeData = darkTheme;
-          break;
         }
       notifyListeners();
     });
@@ -134,7 +112,6 @@ class ThemeProvider extends ChangeNotifier {
     final storage = await SharedPreferences.getInstance();
     storage.setString("themeMode", "dark");
     _currentTheme = ThemeMode.dark;
-    // ignore: use_build_context_synchronously
     MyApp.of(context).reload();
     notifyListeners();
   }
@@ -143,8 +120,6 @@ class ThemeProvider extends ChangeNotifier {
     final storage = await SharedPreferences.getInstance();
     storage.setString("themeMode", "light");
     _currentTheme = ThemeMode.light;
-
-    // ignore: use_build_context_synchronously
     MyApp.of(context).reload();
     notifyListeners();
   }
