@@ -58,12 +58,10 @@ class _BuildPlayButtonState extends State<BuildPlayButton> {
           break;
         case FlutterRadioPlayer.flutter_radio_error:
           isPlaying = false;
-          // connectivityProvider.myStream.();
 
           break;
         case FlutterRadioPlayer.flutter_radio_playing:
           isPlaying = true;
-          // connectivityProvider.initialize();
 
           break;
         default: isPlaying = false ;

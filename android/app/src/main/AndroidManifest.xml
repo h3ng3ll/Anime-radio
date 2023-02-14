@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.anime_radio">
+    package="com.hengell.AnimeRadio">
 
     <!--  Permissions for the plugin  -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
@@ -19,8 +19,6 @@
     </queries>
 
    <application
-
-
 
         android:label="Anime Radio"
         android:name="${applicationName}"

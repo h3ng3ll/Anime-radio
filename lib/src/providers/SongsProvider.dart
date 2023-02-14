@@ -148,9 +148,10 @@ class SongsProvider extends ChangeNotifier {
 
   /// Used in case closing tab player .
   Future<void> hardReload (MusicStation musicStation) async {
-    // await _firstRun(musicStation,musicStation.metaFormat);
+    await _firstRun(musicStation,musicStation.metaFormat);
     try {
       await flutterRadioPlayer.init(
+          // ignore: use_build_context_synchronously
           AppLocalizations.of(_context)?.now_playing ?? "What now playing",
           "Live",
           musicStation.address,

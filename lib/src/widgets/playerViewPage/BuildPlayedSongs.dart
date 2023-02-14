@@ -128,7 +128,8 @@ class _BuildPlayedSongItemState extends State<BuildPlayedSongItem> {
     final lightTheme = Provider.of<ThemeProvider>(context , listen:  false)
         .currentTheme == ThemeMode.light;
 
-    final borderColor = lightTheme && !widget.song.favoriteSong || !widget.colorInvertor ?
+    final borderColor = lightTheme && !widget.song.favoriteSong ||
+             !widget.colorInvertor &&  lightTheme ?
                                       ColorService.black :
                                       ColorService.white;
 

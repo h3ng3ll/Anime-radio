@@ -17,7 +17,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 # In Windows, build-name is used as the major, minor, and patch parts
 # of the product and file versions while build-number is used as the build suffix.
-version: 1.0.0+1
+version: 1.0.1+1
 
 environment:
   sdk: '>=2.19.0-152.0.dev <3.0.0'
@@ -40,7 +40,7 @@ dependencies:
   provider: ^6.0.3
   cupertino_icons: ^1.0.2
   adaptive_theme: ^3.1.1       # theme changing
-  flutter_radio_player: ^1.1.0 # translate radio
+  flutter_radio_player: ^1.0.0 # translate radio
   shared_preferences: ^2.0.15  # restore different settings
   url_launcher: ^6.1.6         # open some url
   grouped_list: ^5.1.2
@@ -51,7 +51,7 @@ dependencies:
 
   dio: ^4.0.6
   path_provider: ^2.0.12          # plugin for finding commonly used locations on the filesystem
-  image_gallery_saver: ^1.7.1     # save image to gallery
+#  image_gallery_saver: ^1.7.1     # save image to gallery
   permission_handler: ^10.2.0     # get perm for example for storage
   http:
 #  flutter_launcher_icons: ^0.10.0
