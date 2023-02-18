@@ -23,8 +23,6 @@ Remember  a name of your favorite song playing now . Mark this song as favorite 
 
 Used sources
 
-- [Radio](http://animeradio.su/)
-
 - [Images](https://www.pinterest.com/)
 
 - [Framework Flutter](https://flutter.dev/)
