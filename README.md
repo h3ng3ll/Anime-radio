@@ -7,7 +7,7 @@
 - More options at settings were added .
 - Image preview animation
 
-# What's was at 1.1.1 version?
+# What's was at 1.1.0 version?
 
 - 3 more anime stations was added
 - Ability mark song or station as favorite
