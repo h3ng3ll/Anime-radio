@@ -1,27 +1,29 @@
 
+import 'package:anime_radio/src/databases/DatabaseImages/DatabaseImages.dart';
 import 'package:anime_radio/src/providers/ThemeProvider.dart';
 import 'package:anime_radio/src/services/ColorService.dart';
 import 'package:anime_radio/src/widgets/playerViewPage/BuildImage/BuildDownloadButton.dart';
+import 'package:anime_radio/src/widgets/playerViewPage/BuildImage/BuildImage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-class BuildImageViewScreen extends StatefulWidget {
+class BuildImageViewPage extends StatefulWidget {
 
-  final Widget image;
   final String imageURL ;
+  final DatabaseImages db ;
 
-   const BuildImageViewScreen({
-    Key? key,
-    required this.image,
-     required this.imageURL
+   const BuildImageViewPage({
+      Key? key,
+     required this.imageURL,
+     required this.db
   }) : super(key: key);
 
   @override
-  State<BuildImageViewScreen> createState() => _BuildImageViewScreenState();
+  State<BuildImageViewPage> createState() => _BuildImageViewPageState();
 }
 
-class _BuildImageViewScreenState extends State<BuildImageViewScreen> {
+class _BuildImageViewPageState extends State<BuildImageViewPage> {
 
   bool visibleNavigation = true;
 
@@ -51,7 +53,7 @@ class _BuildImageViewScreenState extends State<BuildImageViewScreen> {
             },
             child: InteractiveViewer(
                 maxScale: 5,
-                child: widget.image
+                child: BuildImage(imgUrl: widget.imageURL)
             ),
           ),
 
@@ -69,6 +71,7 @@ class _BuildImageViewScreenState extends State<BuildImageViewScreen> {
         .currentTheme == ThemeMode.light;
 
     return [
+      /// Back Button
       Positioned(
           top: y,
           left: x,
@@ -81,12 +84,14 @@ class _BuildImageViewScreenState extends State<BuildImageViewScreen> {
               )
           )
       ),
+      /// Download button
       Positioned(
           top: y,
           right: x,
           child: BuildDownloadButton(
             lightTheme: lightTheme,
             imageURL: widget.imageURL,
+            databaseImages: widget.db,
           )
       )
     ];

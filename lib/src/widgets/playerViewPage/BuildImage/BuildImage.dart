@@ -12,18 +12,27 @@ class BuildImage extends StatelessWidget {
     this.fit = BoxFit.fitWidth,
   });
 
-  final String imgUrl ;
+  final String? imgUrl ;
   final double? height ;
   final double? width ;
   final double? scale;
   final BoxFit fit ;
 
 
+  final alignment = const  Alignment(0.0 , -0.6);
+
   @override
   Widget build(BuildContext context) {
 
+    if(imgUrl == null) {
+      return  Align(
+          alignment: alignment,
+          child: const CircularProgressIndicator()
+      );
+    }
+
     return CachedNetworkImage(
-        imageUrl: imgUrl,
+        imageUrl: imgUrl!,
         imageBuilder: (BuildContext context , ImageProvider imageProvider) => ClipRRect(
           borderRadius: BorderRadius.circular( 25),
           child: Container(
@@ -31,7 +40,6 @@ class BuildImage extends StatelessWidget {
                 image: DecorationImage(
                     image: imageProvider ,
                     fit:  fit ,
-                    scale: scale ?? 1
                 )
             ),
             // color: Colors.green,
@@ -39,7 +47,10 @@ class BuildImage extends StatelessWidget {
             height:  height,
           ),
         ),
-        placeholder: (context, url) => const Center(child:  CircularProgressIndicator()),
+        placeholder: (context, url) => Align(
+            alignment: alignment,
+            child: const CircularProgressIndicator()
+        ),
         errorWidget: (context, url, error) => Container(
 
           width:  width,

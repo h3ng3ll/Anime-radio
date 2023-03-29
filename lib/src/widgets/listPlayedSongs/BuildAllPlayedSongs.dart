@@ -3,11 +3,11 @@
 
 import 'package:anime_radio/src/models/Song.dart';
 import 'package:anime_radio/src/pages/ListPlayedSongsPage.dart';
-import 'package:anime_radio/src/providers/PlayedSongsProvider.dart';
+import 'package:anime_radio/src/providers/playerViewPage/PlayedSongsProvider.dart';
 import 'package:anime_radio/src/services/ColorService.dart';
 import 'package:anime_radio/src/services/LocalStorageService.dart';
 import 'package:anime_radio/src/widgets/listPlayedSongs/painting/TrianglePainter.dart';
-import 'package:anime_radio/src/widgets/playerViewPage/BuildPlayedSongs.dart';
+import 'package:anime_radio/src/widgets/playerViewPage/BuildPlayedSongsTable.dart';
 import 'package:anime_radio/src/widgets/playerViewPage/PlayingSongTitle.dart';
 import 'package:flutter/material.dart';
 import 'package:grouped_list/grouped_list.dart';
@@ -42,14 +42,14 @@ class _BuildAllPlayedSongsState extends State<BuildAllPlayedSongs> {
     songs = provider.songs;
 
 
-      controller =  ScrollController(initialScrollOffset:  provider.offsetAllSongs);
-      controller.addListener(() {
-        provider.offsetAllSongs = controller.offset;
+    controller =  ScrollController(initialScrollOffset:  provider.offsetAllSongs);
+    controller.addListener(() {
+      provider.offsetAllSongs = controller.offset;
 
-        LocalStorageService.saveScrollPositionAllPlayedSongs
-          (controller.offset);
-      });
-    }
+      LocalStorageService.saveScrollPositionAllPlayedSongs
+        (controller.offset);
+    });
+  }
 
   @override
   void dispose() {
@@ -142,7 +142,7 @@ class _BuildAllPlayedSongsState extends State<BuildAllPlayedSongs> {
                   await LocalStorageService.changeLikeStatusOfSongLocally(songs[index].favoriteSong, index);
                   setState(() {});
                 },
-                child: BuildPlayedSongItem(song: songs[index])
+                child: BuildPlayedSongTableItem(song: songs[index])
             );
           }
         },

@@ -381,10 +381,10 @@ class S {
   }
 
   /// `Reset settings`
-  String get reset_settings {
+  String get reset {
     return Intl.message(
       'Reset settings',
-      name: 'reset_settings',
+      name: 'reset',
       desc: '',
       args: [],
     );
@@ -505,6 +505,156 @@ class S {
     return Intl.message(
       'Failed to save image to',
       name: 'failed_to_save_image',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Apply`
+  String get apply {
+    return Intl.message(
+      'Apply',
+      name: 'apply',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Genre`
+  String get genre {
+    return Intl.message(
+      'Genre',
+      name: 'genre',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Genre`
+  String get by_genre {
+    return Intl.message(
+      'Genre',
+      name: 'by_genre',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sort by`
+  String get sort_by {
+    return Intl.message(
+      'Sort by',
+      name: 'sort_by',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Location`
+  String get location {
+    return Intl.message(
+      'Location',
+      name: 'location',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `by Location `
+  String get by_location {
+    return Intl.message(
+      'by Location ',
+      name: 'by_location',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Failed to load an image`
+  String get failed_to_load_an_image {
+    return Intl.message(
+      'Failed to load an image',
+      name: 'failed_to_load_an_image',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This station isn't grant information about played track`
+  String get this_station_is_not_grant_inforation_about_played_track {
+    return Intl.message(
+      'This station isn\'t grant information about played track',
+      name: 'this_station_is_not_grant_inforation_about_played_track',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Clear`
+  String get clear {
+    return Intl.message(
+      'Clear',
+      name: 'clear',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Disable all animations`
+  String get disable_all_animations {
+    return Intl.message(
+      'Disable all animations',
+      name: 'disable_all_animations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Disable image animation`
+  String get disable_image_animation {
+    return Intl.message(
+      'Disable image animation',
+      name: 'disable_image_animation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Disable loading station animations`
+  String get disable_loading_station_animations {
+    return Intl.message(
+      'Disable loading station animations',
+      name: 'disable_loading_station_animations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Show genres of image`
+  String get show_genres_of_image {
+    return Intl.message(
+      'Show genres of image',
+      name: 'show_genres_of_image',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Change`
+  String get change {
+    return Intl.message(
+      'Change',
+      name: 'change',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Here's must be even one selected item or you can disable all options which is located above.`
+  String get here_is_must_be_even_one_selected_item {
+    return Intl.message(
+      'Here\'s must be even one selected item or you can disable all options which is located above.',
+      name: 'here_is_must_be_even_one_selected_item',
       desc: '',
       args: [],
     );

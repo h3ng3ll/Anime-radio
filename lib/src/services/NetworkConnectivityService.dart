@@ -13,6 +13,7 @@ class NetworkConnectivityService {
   NetworkConnectivityService._();
   static final _instance = NetworkConnectivityService._();
   static NetworkConnectivityService get instance => _instance;
+
   final _networkConnectivity = Connectivity();
   final _controller = StreamController.broadcast();
   Stream get myStream => _controller.stream;

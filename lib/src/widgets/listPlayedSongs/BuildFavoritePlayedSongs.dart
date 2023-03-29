@@ -2,11 +2,11 @@
 
 import 'package:anime_radio/src/models/Song.dart';
 import 'package:anime_radio/src/pages/ListPlayedSongsPage.dart';
-import 'package:anime_radio/src/providers/PlayedSongsProvider.dart';
+import 'package:anime_radio/src/providers/playerViewPage/PlayedSongsProvider.dart';
 import 'package:anime_radio/src/services/ColorService.dart';
 import 'package:anime_radio/src/services/LocalStorageService.dart';
 import 'package:anime_radio/src/widgets/listPlayedSongs/painting/TrianglePainter.dart';
-import 'package:anime_radio/src/widgets/playerViewPage/BuildPlayedSongs.dart';
+import 'package:anime_radio/src/widgets/playerViewPage/BuildPlayedSongsTable.dart';
 import 'package:anime_radio/src/widgets/playerViewPage/PlayingSongTitle.dart';
 import 'package:flutter/material.dart';
 import 'package:grouped_list/grouped_list.dart';
@@ -81,7 +81,7 @@ class _BuildFavoritePlayedSongsState extends State<BuildFavoritePlayedSongs> {
               if(unVisibleFilter.contains(DateTime(song.whenPlayed.year , song.whenPlayed.month , song.whenPlayed.day))){
                 return Container();
               } else {
-                return BuildPlayedSongItem(
+                return BuildPlayedSongTableItem(
                   song: song  ,
                   useFaviriteSongColor: false,
                   colorInvertor: false,

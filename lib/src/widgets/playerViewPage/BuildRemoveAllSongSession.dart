@@ -1,6 +1,7 @@
-import 'package:anime_radio/src/providers/PlayerDesignProvider.dart';
-import 'package:anime_radio/src/providers/SongsProvider.dart';
+
 import 'package:anime_radio/src/providers/ThemeProvider.dart';
+import 'package:anime_radio/src/providers/playerViewPage/PlayerDesignProvider.dart';
+import 'package:anime_radio/src/providers/playerViewPage/SongsProvider.dart';
 import 'package:anime_radio/src/services/ColorService.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

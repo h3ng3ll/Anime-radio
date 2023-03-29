@@ -1,6 +1,13 @@
 
+#What's new at  1.2.1
+- Fixed bugs and errors
+- UI customized
+- Add new Genre of Station the Metal Genre
+- Removed and added new anime stations
+- More options at settings were added .
+- Image preview animation
 
-# What's new at 1.1 version?
+# What's was at 1.1.1 version?
 
 - 3 more anime stations was added
 - Ability mark song or station as favorite
@@ -23,7 +30,6 @@ Remember  a name of your favorite song playing now . Mark this song as favorite 
 
 Used sources
 
-- [Radio](http://animeradio.su/)
 
 - [Images](https://www.pinterest.com/)
 
@@ -35,10 +41,18 @@ Used sources
 
 <img src="https://i.ibb.co/LZYn3tf/Screenshot-20230211-215256-Anime-Radio.png" width="270" height="585" /> <img src="https://i.ibb.co/cYq3F4d/Screenshot-20230211-215625-Anime-Radio.png" width="270" height="585" />
 
+
+<img src="https://i.ibb.co/xqSz8ts/Screenshot-20230329-145204-Anime-Radio.png" width="270" height="585" /> <img src="https://i.ibb.co/KX2GPC2/Screenshot-20230329-145511-Anime-Radio.png" width="270" height="585" />
+
 <img src="https://i.ibb.co/gZVcgff/Screenshot-20230211-215644-Anime-Radio.png" width="270" height="585" /> <img src="https://i.ibb.co/4Z2x91x/Screenshot-20230211-215319-Anime-Radio.png" width="270" height="585" />
 
-<img src="https://i.ibb.co/17Q1zJ5/Screenshot-20230211-215131-Anime-Radio.png" width="270" height="585" /> <img src="https://i.ibb.co/rQ7yK91/Screenshot-20230211-215142-Anime-Radio.png" width="270" height="585" />
 
+
+
+<img src="https://i.ibb.co/gdyq17H/Screenshot-20230329-145449-Anime-Radio.png" width="270" height="585" /> <img src="https://i.ibb.co/rQ7yK91/Screenshot-20230211-215142-Anime-Radio.png" width="270" height="585" />
+
+
+ <img src="https://i.ibb.co/WHTw4LH/Screenshot-20230329-145414-Anime-Radio.png" width="270" height="585" />
 
 
 

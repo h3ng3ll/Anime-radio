@@ -3,7 +3,7 @@
 import 'package:anime_radio/l10n/l10n.dart';
 import 'package:anime_radio/src/dialogs/BuildRemoveAllSongsDialog.dart';
 import 'package:anime_radio/src/models/Song.dart';
-import 'package:anime_radio/src/providers/PlayedSongsProvider.dart';
+import 'package:anime_radio/src/providers/playerViewPage/PlayedSongsProvider.dart';
 import 'package:anime_radio/src/providers/ThemeProvider.dart';
 import 'package:anime_radio/src/services/ColorService.dart';
 import 'package:anime_radio/src/services/LocalStorageService.dart';

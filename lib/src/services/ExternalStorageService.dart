@@ -2,8 +2,8 @@
 
 import 'dart:io';
 
+import 'package:anime_radio/src/databases/DatabaseImages/DatabaseImages.dart';
 import 'package:anime_radio/src/models/SaveStatus.dart';
-import 'package:anime_radio/src/services/ImageService.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
@@ -14,12 +14,16 @@ class ExternalStorageService {
 
   final  _dio = Dio();
 
-  Future<SaveStatus> saveImageToGallery(String url , BuildContext context ) async {
+  Future<SaveStatus> saveImageToGallery(
+      String url ,
+      BuildContext context,
+      DatabaseImages databaseImages
+  ) async {
 
     late Directory? directory ;
-    final index = ImageService.images.indexOf(url);
+    final index = databaseImages.images.indexOf(url);
     /// take only extension of image
-    final ext = ImageService.images[index].split(".").last;
+    final ext = databaseImages.images[index].split(".").last;
 
     try {
       if(await  requestPermission(Permission.storage)){
@@ -43,7 +47,8 @@ class ExternalStorageService {
 
       } else {
         // ignore: use_build_context_synchronously
-        return SaveStatus(false, "" , AppLocalizations.of(context)!.storage_permission_have_not_granted) ;      }
+        return SaveStatus(false, "" , AppLocalizations.of(context)!.storage_permission_have_not_granted) ;
+      }
 
       if(!await directory.exists()) {
          await directory.create();
@@ -51,7 +56,9 @@ class ExternalStorageService {
       if(await directory.exists()) {
 
 
-        File saveFile = File("${directory.path}/animeRadio-$index.$ext");
+        File saveFile = File(""
+            "${directory.path}/animeRadio-${databaseImages.genre.name}.$index.$ext"
+        );
 
         Response  response = await _dio.get(
             url,

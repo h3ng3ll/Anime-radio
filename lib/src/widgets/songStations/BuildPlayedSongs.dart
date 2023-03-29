@@ -1,8 +1,8 @@
 
 
 import 'package:anime_radio/src/models/Settings.dart';
-import 'package:anime_radio/src/providers/PlayerDesignProvider.dart';
-import 'package:anime_radio/src/widgets/playerViewPage/BuildPlayedSongs.dart';
+import 'package:anime_radio/src/providers/playerViewPage/PlayerDesignProvider.dart';
+import 'package:anime_radio/src/widgets/playerViewPage/BuildPlayedSongsTable.dart';
 import 'package:anime_radio/src/widgets/playerViewPage/PlayingSongTitle.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -32,7 +32,7 @@ class _BuildPlayedSongsSessionState extends State<BuildPlayedSongsSession> {
                BuildPlayingTitle(),
 
               /// played in current session
-               BuildPlayedSongsPlayer()
+               BuildPlayedSongsTable()
 
             ],
           )

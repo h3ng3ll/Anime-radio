@@ -32,7 +32,7 @@
   "station" : "Станция",
   "more_app_info" : "Больше о приложении",
   "failed_to_load_station" : "Не удалось загрузить радиостанцию",
-  "reset_settings" : "Сбросить настройки",
+  "reset": "Сбросить настройки",
   "show_unsuccessfully_loaded_stations" : "Показывать станции которые \n  не удалось загрузить",
   "no_internet_connection" : "Нету подлючения к интернету",
   "image_successfully_has_been_saved_to" : "Изображение было успешно сохранено в ",
@@ -44,6 +44,20 @@
   "all_stations" : "Все станции" ,
   "favorite_stations" : "Любимые станции",
   "version" : "Версия ",
-  "failed_to_save_image" : "Не удалось сохранить изображение в"
-
+  "failed_to_save_image" : "Не удалось сохранить изображение в",
+  "apply" : "Применить",
+  "genre" : "Жанр",
+  "by_genre" : "Жанру",
+  "sort_by" : "Отсортировать по",
+  "location" : "Расположение",
+  "by_location" : "Расположению",
+  "failed_to_load_an_image" : "Не удалось загрузить изображение",
+  "this_station_is_not_grant_inforation_about_played_track" : "Эта станция не предоставляет информацию о играющей песни",
+  "clear": "Очистить",
+  "disable_all_animations" : "Отключить все анимации.",
+  "disable_image_animation" : "Отключить анимацию изображения",
+  "disable_loading_station_animations" : "Оключить анимации загрузки станции",
+  "show_genres_of_image": "Отбражаемые жанры изображения",
+  "change" : "Изменить",
+  "here_is_must_be_even_one_selected_item" : "Должен быть хотя бы один выбран жанр или вы можете отключить все , отключивши функцию выше ."
 }

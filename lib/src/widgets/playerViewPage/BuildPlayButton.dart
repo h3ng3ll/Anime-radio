@@ -1,7 +1,8 @@
-import 'package:anime_radio/src/providers/SongsProvider.dart';
+
 import 'package:anime_radio/src/providers/ThemeProvider.dart';
+import 'package:anime_radio/src/providers/playerViewPage/SongsProvider.dart';
 import 'package:anime_radio/src/services/ColorService.dart';
-import 'package:anime_radio/src/services/RadioStationService.dart';
+import 'package:anime_radio/src/databases/DatabaseRadioStations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_radio_player/flutter_radio_player.dart';
 import 'package:provider/provider.dart';
@@ -84,13 +85,13 @@ class _BuildPlayButtonState extends State<BuildPlayButton> {
     else {
         await songsProvider.flutterRadioPlayer.play();
 
-        /// do we try to play song  but player has attached ?
+        /// did we tried to play song  but player has not attached ?
         bool? status =  await songsProvider.flutterRadioPlayer.isPlaying();
 
         if(!status!) {
-          final activeStationIndex = RadioStationService.getStations.map((e) => e.name).toList().indexOf(songsProvider.activeStation);
+          final activeStationIndex = songsProvider.activeStationIndex; // DatabaseRadioStations.getStations.map((e) => e.name).toList().indexOf(songsProvider.activeStationIndex);
 
-          final activeStation = RadioStationService.getStations[activeStationIndex];
+          final activeStation = DatabaseRadioStations.getStations[activeStationIndex!];
 
           await songsProvider.hardReload(activeStation);
         }

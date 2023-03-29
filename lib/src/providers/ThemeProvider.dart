@@ -2,13 +2,32 @@ import 'package:anime_radio/main.dart';
 import 'package:anime_radio/src/services/ColorService.dart';
 import 'package:anime_radio/src/services/LocalStorageService.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ThemeProvider extends ChangeNotifier {
 
   static final  darkTheme =  ThemeData(
+    // checkboxTheme: const CheckboxThemeData(
+    //   // fillColor: MaterialStatePropertyAll<Color>(ColorService.violet),
+    //   checkColor: MaterialStatePropertyAll<Color>(ColorService.white),
+    //
+    // ),
+    snackBarTheme: const SnackBarThemeData(
+      backgroundColor: ColorService.dGrey,
+      contentTextStyle: TextStyle(
+        color: ColorService.white
+      )
+    ),
+    chipTheme: ChipThemeData(
+      disabledColor: ColorService.grey8,
+      selectedColor: ColorService.lilac,
+      labelStyle: const  TextStyle(
+          color: ColorService.white
+      ),
 
+    ),
     colorScheme: ColorScheme.fromSwatch().copyWith(
         secondary: ColorService.lilac,
         brightness: Brightness.dark
@@ -60,6 +79,20 @@ class ThemeProvider extends ChangeNotifier {
 
   );
   static final lightTheme = ThemeData(
+      //
+      // checkboxTheme: const CheckboxThemeData(
+      //   fillColor: MaterialStatePropertyAll<Color>(ColorService.violet),
+      //   checkColor: MaterialStatePropertyAll<Color>(ColorService.black),
+      //   overlayColor: MaterialStatePropertyAll<Color>(ColorService.violet),
+      // ),
+
+      chipTheme: ChipThemeData(
+        selectedColor: ColorService.lighterPink1,
+        disabledColor: ColorService.grey,
+        labelStyle: const  TextStyle(
+          color: ColorService.black
+        )
+      ),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         selectedLabelStyle: TextStyle(
           color: ColorService.black
@@ -84,7 +117,7 @@ class ThemeProvider extends ChangeNotifier {
               statusBarIconBrightness: Brightness.light,
               statusBarBrightness: Brightness.light
           ),
-        color: ColorService.lilac
+        color: ColorService.violet
       ),
       sliderTheme:   SliderThemeData(
          activeTrackColor:  ColorService.violet,
@@ -105,8 +138,8 @@ class ThemeProvider extends ChangeNotifier {
       brightness: Brightness.light
   );
 
-  late ThemeData _themeData ;
-  ThemeData get themeData => _themeData;
+  late ThemeData? _themeData ;
+  ThemeData? get themeData => _themeData;
 
   /// show what theme is using now
   ThemeMode  _currentTheme = ThemeMode.system ;
@@ -121,8 +154,18 @@ class ThemeProvider extends ChangeNotifier {
           case ThemeMode.dark:  _themeData = darkTheme;
                         break;
         case ThemeMode.system:
-          /// by default using dark theme
-          _themeData = darkTheme;
+
+          final brightness = SchedulerBinding.instance.window.platformBrightness;
+          /// define current theme of user .
+          if(brightness == Brightness.dark) {
+            _themeData = darkTheme;
+            _currentTheme = ThemeMode.dark;
+          } else {
+            _themeData = lightTheme;
+            _currentTheme = ThemeMode.light;
+          }
+
+
           break;
         }
       notifyListeners();

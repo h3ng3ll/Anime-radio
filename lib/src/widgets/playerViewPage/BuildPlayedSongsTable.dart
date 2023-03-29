@@ -1,43 +1,34 @@
 import 'package:anime_radio/l10n/l10n.dart';
 import 'package:anime_radio/src/models/Song.dart';
-import 'package:anime_radio/src/providers/PlayerDesignProvider.dart';
-import 'package:anime_radio/src/providers/SongsProvider.dart';
 import 'package:anime_radio/src/providers/ThemeProvider.dart';
+import 'package:anime_radio/src/providers/playerViewPage/PlayerDesignProvider.dart';
+import 'package:anime_radio/src/providers/playerViewPage/SongsProvider.dart';
 import 'package:anime_radio/src/services/ColorService.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class BuildPlayedSongsPlayer extends StatefulWidget {
+class BuildPlayedSongsTable extends StatefulWidget {
 
-  const BuildPlayedSongsPlayer({Key? key}) : super(key: key);
+  const BuildPlayedSongsTable({Key? key}) : super(key: key);
 
   @override
-  State<BuildPlayedSongsPlayer> createState() => _BuildPlayedSongsPlayerState();
+  State<BuildPlayedSongsTable> createState() => _BuildPlayedSongsTableState();
 }
 
-class _BuildPlayedSongsPlayerState extends State<BuildPlayedSongsPlayer> {
+class _BuildPlayedSongsTableState extends State<BuildPlayedSongsTable> {
 
-
+  List<SavedSong> songs = [];
   int index = 0;
-
-    List<SavedSong> songs = [];
-  @override
-  void initState() {
-    getSongs();
-    super.initState();
-  }
-
-  void getSongs () {
-    songs = Provider.of<SongsProvider>(context , listen:  false )
-        .haveBeenPlayingSongs.reversed.toList();
-  }
 
   @override
   Widget build(BuildContext context) {
 
     final designProvider = Provider.of<PlayerDesignProvider>(context , listen:  true);
+
+    final songs = Provider.of<SongsProvider>(context , )
+        .haveBeenPlayingSongs.reversed.toList();
 
     if (!designProvider.showSongPreview){
       return Container();
@@ -45,7 +36,7 @@ class _BuildPlayedSongsPlayerState extends State<BuildPlayedSongsPlayer> {
 
     return Expanded(
       child: InkWell(
-        onTap: () {
+        onTap: songs.isEmpty ? null  :  () {
                           /// same as reversed
           final index = (songs.length - this.index -1);
           Provider.of<SongsProvider>(context , listen:  false).changeLikeStatus(index);
@@ -56,7 +47,7 @@ class _BuildPlayedSongsPlayerState extends State<BuildPlayedSongsPlayer> {
           physics: const FixedExtentScrollPhysics(),
           itemExtent: 90.0,
           squeeze: 0.9,
-          children: songs.map((song) => BuildPlayedSongItem(song: song)).toList(),
+          children: songs.map((song) => BuildPlayedSongTableItem(song: song)).toList(),
           // itemCount: songs.length,
         ),
       ),
@@ -64,7 +55,7 @@ class _BuildPlayedSongsPlayerState extends State<BuildPlayedSongsPlayer> {
   }
 }
 
-class BuildPlayedSongItem extends StatefulWidget {
+class BuildPlayedSongTableItem extends StatefulWidget {
 
   final SavedSong song ;
 
@@ -72,7 +63,7 @@ class BuildPlayedSongItem extends StatefulWidget {
 
   /// used only to set up specific decoration style .
   final bool colorInvertor;
-  const BuildPlayedSongItem({
+  const BuildPlayedSongTableItem({
     Key? key,
     required this.song,
     this.useFaviriteSongColor = true,
@@ -81,10 +72,10 @@ class BuildPlayedSongItem extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  State<BuildPlayedSongItem> createState() => _BuildPlayedSongItemState();
+  State<BuildPlayedSongTableItem> createState() => _BuildPlayedSongTableItemState();
 }
 
-class _BuildPlayedSongItemState extends State<BuildPlayedSongItem> {
+class _BuildPlayedSongTableItemState extends State<BuildPlayedSongTableItem> {
   TableRow table (SavedSong song , bool lightTheme)  {
 
     const  alignment =  TextAlign.center;

@@ -1,17 +1,16 @@
 import 'dart:async';
 
+import 'package:anime_radio/src/providers/SettingsProvider.dart';
 import 'package:anime_radio/src/services/ColorService.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class BuildUpdateSettingsButton extends StatefulWidget {
-  /// a bit crap code
   final void Function () updateParent;
-  final Future<void> Function () updateSettings;
 
   const BuildUpdateSettingsButton({
     Key? key,
     required this.updateParent,
-    required this.updateSettings
   }) : super(key: key);
 
   @override
@@ -37,8 +36,12 @@ class _BuildUpdateSettingsButtonState extends State<BuildUpdateSettingsButton> {
     /// show inactive button
     setState(() => canUpdate = false );
     /// save settings to LocalStorage
-    await widget.updateSettings();
-    widget.updateParent();
+    // await widget.updateSettings();
+    // widget.updateParent();
+    
+    /// save settings  via Provider 
+    // ignore: use_build_context_synchronously
+    Provider.of<SettingsProvider>(context , listen: false).saveSettings();
     /// run timer 5 sec after allow press again
     timerCycle();
 

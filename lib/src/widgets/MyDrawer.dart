@@ -3,7 +3,8 @@ import 'package:admob_flutter/admob_flutter.dart';
 import 'package:anime_radio/src/pages/AppInfoPage.dart';
 import 'package:anime_radio/src/pages/ListPlayedSongsPage.dart';
 import 'package:anime_radio/src/pages/SettingsPage.dart';
-import 'package:anime_radio/src/providers/PlayedSongsProvider.dart';
+import 'package:anime_radio/src/providers/SettingsProvider.dart';
+import 'package:anime_radio/src/providers/playerViewPage/PlayedSongsProvider.dart';
 import 'package:anime_radio/src/providers/ThemeProvider.dart';
 import 'package:anime_radio/src/services/AdMobService.dart';
 import 'package:anime_radio/src/services/ColorService.dart';
@@ -14,44 +15,20 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 
 
-class MyDrawer extends StatefulWidget {
+class MyDrawer extends StatelessWidget {
 
   final void Function () update;
 
-  const MyDrawer({Key? key, required this.update}) : super(key: key);
+   MyDrawer({Key? key, required this.update}) : super(key: key);
 
-  @override
-  State<MyDrawer> createState() => _MyDrawerState();
-}
+  final AdmobBannerSize bannerSize  = AdmobBannerSize.BANNER;
 
-class _MyDrawerState extends State<MyDrawer> {
-
-  AdmobBannerSize? bannerSize ;
-  late AdmobInterstitial interstitialAd ;
-
-  @override
-  void initState() {
-
-    initializeAds();
-    super.initState();
-  }
-
-  void initializeAds () {
-    bannerSize = AdmobBannerSize.BANNER;
-
-    interstitialAd = AdmobInterstitial(
-        adUnitId: AdMobService().getBannerAdUnitId()!,
-        listener: (AdmobAdEvent event , Map<String , dynamic>? args){
-          if (event == AdmobAdEvent.closed) interstitialAd.load();
-        }
-    )..load();
-  }
-
+  final interestialAd = AdMobService.instance.interstitialAdBanner;
 
   @override
   Widget build(BuildContext context) {
 
-
+    final settingsProvider =  Provider.of<SettingsProvider>(context , listen:  false) ;
     final theme = Provider.of<ThemeProvider>(context , listen:  false).currentTheme;
 
     final size = MediaQuery.of(context).size;
@@ -91,12 +68,11 @@ class _MyDrawerState extends State<MyDrawer> {
                   AppLocalizations.of(context)!.go_to_settings,
                   // style:  TextStyle(color: theme == ThemeMode.dark ? null : ColorService.white),
               ),
-              onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => 
-                      SettingsPage(update: widget.update,)
-                    )
-              )
+              onPressed: () => Navigator.push(context, MaterialPageRoute(
+                        builder: (context) => ChangeNotifierProvider.value(
+                            value: settingsProvider,
+                            child: SettingsPage(update: update)
+                          )))
             ),
             leading: const  Icon(Icons.settings),
           ),
@@ -140,7 +116,7 @@ class _MyDrawerState extends State<MyDrawer> {
             ),
           ),
 
-          if(bannerSize != null) ...adBanner()
+         ...adBanner()
         ],
 
       ),
@@ -159,8 +135,10 @@ class _MyDrawerState extends State<MyDrawer> {
     Container(
       margin: const EdgeInsets.only(bottom: 12),
       height: 52,
-      child: AdmobBanner(adUnitId: AdMobService().getBannerAdUnitId()!, adSize: bannerSize!,),
+      child: AdmobBanner(
+        adUnitId: AdMobService.getBannerAdUnitId()!,
+        adSize: bannerSize,
+      ),
     )
   ];
-
 }

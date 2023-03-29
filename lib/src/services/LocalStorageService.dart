@@ -219,6 +219,7 @@ class LocalStorageService {
   static Future<void> saveSongStationsPageIndex(int index) async =>
       await _saveData("songStationsPageIndex", index);
 
+  /// SavedSong page number
 
   static Future<int?> getSavedSongsPageIndex() async {
     final pref = await SharedPreferences.getInstance();
@@ -228,7 +229,23 @@ class LocalStorageService {
   static Future<void> saveSongsPageIndex(int index) async =>
       await _saveData("savedSongsPageIndex", index);
 
+  /// Home page 1 page : Scrollcontroller position Value
 
-
-
+  static Future<double?> getStsPgePos() async {
+    final pref = await SharedPreferences.getInstance();
+    return  pref.getDouble("saveStationsPagePosition");
   }
+
+  static Future<void> saveStsPgePos (double position) async =>
+      await _saveData("saveStationsPagePosition", position);
+
+  /// Home page 2 page : Scrollcontroller position Value
+
+  static Future<double?> getFvtStsPgePos() async {
+    final pref = await SharedPreferences.getInstance();
+    return  pref.getDouble("saveFavoriteStationsPagePosition");
+  }
+
+  static Future<void> saveFvtStsPgePos (double position) async =>
+      await _saveData("saveFavoriteStationsPagePosition", position);
+}

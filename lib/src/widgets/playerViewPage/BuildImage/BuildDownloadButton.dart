@@ -1,15 +1,24 @@
 
 import 'package:admob_flutter/admob_flutter.dart';
+import 'package:anime_radio/src/databases/DatabaseImages/DatabaseImages.dart';
 import 'package:anime_radio/src/dialogs/BuildDownloadStatusDialog.dart';
+import 'package:anime_radio/src/providers/playerViewPage/SongsProvider.dart';
 import 'package:anime_radio/src/services/AdMobService.dart';
 import 'package:anime_radio/src/services/ColorService.dart';
 import 'package:anime_radio/src/services/ExternalStorageService.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class BuildDownloadButton extends StatefulWidget {
-  const BuildDownloadButton({Key? key, required this.lightTheme, required this.imageURL}) : super(key: key);
+  const BuildDownloadButton({
+    Key? key,
+    required this.lightTheme,
+    required this.imageURL, required this.databaseImages
+  }) : super(key: key);
   final bool lightTheme  ;
   final String imageURL ;
+  final DatabaseImages databaseImages;
+
   @override
   State<BuildDownloadButton> createState() => _BuildDownloadButtonState();
 }
@@ -18,32 +27,14 @@ class _BuildDownloadButtonState extends State<BuildDownloadButton> {
 
 
 
-  late AdmobReward rewardAd ;
-  late AdmobInterstitial interstitialAd ;
-
+  final AdmobReward rewardAd = AdMobService.instance.rewardAd;
+  final  AdmobInterstitial interstitialAd = AdMobService.instance.interstitialAdBanner;
   bool  nowDownloadImage = false;
 
-  @override
-  void initState() {
 
 
-    rewardAd = AdmobReward(
-        adUnitId: AdMobService().getRewardBasedVideoAdUnitId()!,
-        listener: (event , args) {
-          if(event == AdmobAdEvent.closed) rewardAd.load();
-        }
-    )..load();
-
-    interstitialAd = AdmobInterstitial(
-        adUnitId: AdMobService().getInterstitialAdUnitId()!,
-        listener: (event , args) {
-          if(event == AdmobAdEvent.closed) rewardAd.load();
-        }
-    )..load();
-    super.initState();
-  }
-
-  Future adMobService () async {
+  Future adMobService (SongsProvider provider) async {
+    await provider.flutterRadioPlayer.stop();
     if(await rewardAd.isLoaded){
       rewardAd.show();
     }
@@ -57,11 +48,13 @@ class _BuildDownloadButtonState extends State<BuildDownloadButton> {
 
     setState(() => nowDownloadImage = true );
 
-    await adMobService();
+    final provider = Provider.of<SongsProvider>(context , listen:  false);
+
+    await adMobService(provider);
 
     // ignore: use_build_context_synchronously
     final status = await ExternalStorageService()
-        .saveImageToGallery(widget.imageURL , context );
+        .saveImageToGallery(widget.imageURL , context , widget.databaseImages );
 
     // ignore: use_build_context_synchronously
     await showDialog(
@@ -69,6 +62,7 @@ class _BuildDownloadButtonState extends State<BuildDownloadButton> {
         builder: (context) =>   BuildDownloadStatusDialog(status: status,)
     );
 
+    await provider.flutterRadioPlayer.play();
 
     setState(() => nowDownloadImage = false );
   }

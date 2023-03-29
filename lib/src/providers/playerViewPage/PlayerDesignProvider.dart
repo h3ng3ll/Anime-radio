@@ -35,9 +35,12 @@ class PlayerDesignProvider extends ChangeNotifier {
 
     if(_delta + details.delta.dy*alpha >= 0.01 && _delta + details.delta.dy*alpha <= 40){
 
+
        _delta += details.delta.dy*alpha ;
 
        _showOrHideSongPreview(_delta)  ;
+
+
 
        saveToStorage();
     }

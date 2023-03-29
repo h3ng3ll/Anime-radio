@@ -1,26 +1,10 @@
-
-
-
 import 'package:admob_flutter/admob_flutter.dart';
 import 'package:anime_radio/src/services/AdMobService.dart';
 import 'package:anime_radio/src/widgets/playerViewPage/BuildOnlineStatus.dart';
 import 'package:flutter/material.dart';
 
-class BuildTop extends StatefulWidget {
+class BuildTop extends StatelessWidget {
   const BuildTop({Key? key}) : super(key: key);
-
-  @override
-  State<BuildTop> createState() => _BuildTopState();
-}
-
-class _BuildTopState extends State<BuildTop> {
-
-
-  @override
-  void initState() {
-    super.initState();
-
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +12,10 @@ class _BuildTopState extends State<BuildTop> {
     final size = MediaQuery.of(context).size;
     return Row(
       children:  [
-
           const BackButton(),
           Expanded(
             child: AdmobBanner(
-                adUnitId: AdMobService().getBannerAdUnitId()!,
+                adUnitId: AdMobService.getBannerAdUnitId()!,
                 adSize: AdmobBannerSize.ADAPTIVE_BANNER(width: size.width~/1.3)
             ),
           ),
@@ -41,9 +24,6 @@ class _BuildTopState extends State<BuildTop> {
             padding:  EdgeInsets.only(left: 15.0),
             child:  BuildOnlineStatus(),
           ),
-
-
-
       ],
     );
   }

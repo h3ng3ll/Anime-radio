@@ -1,10 +1,12 @@
 
 import 'package:anime_radio/l10n/l10n.dart';
 import 'package:anime_radio/src/providers/LocaleProvider.dart';
+import 'package:anime_radio/src/providers/SettingsProvider.dart';
 import 'package:anime_radio/src/providers/ThemeProvider.dart';
 import 'package:anime_radio/src/services/LocalStorageService.dart';
-import 'package:anime_radio/src/widgets/settings/BuildListSettingItem.dart';
-import 'package:anime_radio/src/widgets/settings/BuildUpdateSettingsButton.dart';
+import 'package:anime_radio/src/widgets/settings/BuildSwitchSettingItem.dart';
+import 'package:anime_radio/src/widgets/settings/DisableAnimations/BuildDisableAnimationsWidget.dart';
+import 'package:anime_radio/src/widgets/settings/BuildImageConfigurations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -26,6 +28,8 @@ class SettingsPage extends StatefulWidget {
 class _SettingsPageState extends State<SettingsPage> {
 
 
+  late Settings settings;
+
   @override
   void initState() {
     super.initState();
@@ -33,8 +37,10 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
 
-  Settings settings = Settings();
-
+  Future<void> onWillPop (SettingsProvider provider) async {
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+    await provider.saveSettings();
+  }
 
 
   Widget title (String title) => Align(
@@ -51,7 +57,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
     bool lightTheme = themeProvider.currentTheme == ThemeMode.light;
 
-    return BuildListSettingItem(
+    return BuildSwitchSettingItem(
         lightTheme ?
               AppLocalizations.of(context)!.light_theme :
               AppLocalizations.of(context)!.dark_theme,
@@ -68,20 +74,16 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 
 
-  Widget showImageDuringPlaying() => BuildListSettingItem(
-      AppLocalizations.of(context)!.show_image_during_playing ,
-      icon: Icons.image, switchValue: settings.showImageDuringPlaying,
-      callBack: (bool switchStatus) => settings.showImageDuringPlaying = switchStatus
-  );
 
-  Widget showTableWithSongs () => BuildListSettingItem(
+
+  Widget showTableWithSongs () => BuildSwitchSettingItem(
       AppLocalizations.of(context)!.show_table_with_songs ,
       icon: Icons.table_rows_rounded,
       switchValue: settings.showSongsTable,
       callBack: (bool switchStatus) => settings.showSongsTable = switchStatus
   );
 
-  Widget showUnloadedStations () => BuildListSettingItem(
+  Widget showUnloadedStations () => BuildSwitchSettingItem(
       AppLocalizations.of(context)!.show_unsuccessfully_loaded_stations,
       icon: Icons.error,
       switchValue: settings.showUnloadedStations,
@@ -133,29 +135,36 @@ class _SettingsPageState extends State<SettingsPage> {
   );
 
 
-  Widget resetSettingsButton () =>  ElevatedButton(
+  Widget resetSettingsButton (SettingsProvider provider) =>  ElevatedButton(
       onPressed: () async {
-        settings.resetSettings();
-        await LocalStorageService.saveSettings(settings);
+
+        await provider.resetSettings();
+        provider.update();
         widget.update;
         setState(() {   });
 
       },
-      child: Text(AppLocalizations.of(context)!.reset_settings)
+      child: Text(AppLocalizations.of(context)!.reset)
   );
-
 
   @override
   Widget build(BuildContext ctx) {
 
+    final provider = Provider.of<SettingsProvider>(context , listen:  false) ;
+     settings = provider.settings;
+
     final size = MediaQuery.of(context).size;
+
+    /// using for   widgets are depend from their parent .
+    const double leftPadding = 40.0 ;
 
     return WillPopScope(
       child: Scaffold(
         appBar: AppBar(
           leading: BackButton(
-            onPressed: () {
-              SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+            onPressed: () async{
+              await onWillPop(provider);
+              // ignore: use_build_context_synchronously
               Navigator.pop(context);
             },
           ),
@@ -163,56 +172,54 @@ class _SettingsPageState extends State<SettingsPage> {
             const Spacer(),
             Center(child: title(AppLocalizations.of(context)!.settings)),
             const Spacer(),
-            BuildUpdateSettingsButton(
-              updateParent: widget.update,
-              updateSettings: () async => await LocalStorageService.saveSettings(settings),
-            )
+            // BuildUpdateSettingsButton(
+            //   updateParent: widget.update,
+            // )
           ],
         ),
-        body: FutureBuilder<Settings>(
-          future:  LocalStorageService.getSettings(),
-          builder: (context, snapshot) {
-            if(ConnectionState.done == snapshot.connectionState) {
-              settings = snapshot.data!;
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Expanded(
-                      child: Column(
-                        children: [
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Expanded(
+                child: Column(
+                  children: [
 
-                          /// switch images
-                          showImageDuringPlaying(),
-                          /// switch last music
-                          showTableWithSongs(),
-                          //   /// switch sound slider
-                          // showSoundSliderOrNot(),
-                          showUnloadedStations(),
+                    /// Image configurations
+                    const BuildImageConfigurations(leftPadding: leftPadding,),
 
-                          title(AppLocalizations.of(context)!.auto_settings),
-                          /// dark or light theme
-                          changeTheme(),
+                    /// show table with songs
+                    showTableWithSongs(),
 
-                          changeLocale(),
+                    /// show unsuccessfully loaded stations
+                    showUnloadedStations(),
 
-                        ],
-                      )
-                  ),
+                    /// Animations
 
-                  // Spacer(),
-                  resetSettingsButton(),
-                  SizedBox(height: size.height*0.015)
-                ],
-              );
-            }
-            /// nothing load because it's not  depend on Internet .
-            return Container();
-          }
+                    const BuildDisableAnimationsWidgets(),
+
+                    /// AUTO SETTINGS
+
+                    // title(AppLocalizations.of(context)!.auto_settings),
+
+                    SizedBox(height: size.height*0.05,),
+
+                    /// dark or light theme
+                    changeTheme(),
+
+                    changeLocale(),
+
+                  ],
+                )
+            ),
+
+            resetSettingsButton(provider),
+            SizedBox(height: size.height*0.015)
+          ],
         ),
       ),
       onWillPop: () async {
-        SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-        return true;
+         await onWillPop(provider);
+         return true;
       },
     );
   }

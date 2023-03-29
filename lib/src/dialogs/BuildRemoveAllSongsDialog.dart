@@ -1,5 +1,5 @@
 
-import 'package:anime_radio/src/providers/PlayedSongsProvider.dart';
+import 'package:anime_radio/src/providers/playerViewPage/PlayedSongsProvider.dart';
 import 'package:anime_radio/src/services/LocalStorageService.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
