@@ -80,14 +80,13 @@ class ExternalStorageService {
       debugPrint("error:  $e");
 
       if(e is DioError) {
-        if(e.error.osError.errorCode == 7) {
-          return SaveStatus(
-              false,
-              "${directory?.path}/animeRadio-$index.$ext" ,
-              "${AppLocalizations.of(context)!.no_internet_connection}"
-                  "\n${AppLocalizations.of(context)!.failed_to_save_image}"
-          ) ;
 
+        if((e.error as SocketException).osError?.errorCode == 7){
+          return SaveStatus(
+                  false,
+                  "${directory?.path}/animeRadio-$index.$ext" ,
+                  "${AppLocalizations.of(context)!.no_internet_connection}"
+                      "\n${AppLocalizations.of(context)!.failed_to_save_image}");
         }
       }
 
